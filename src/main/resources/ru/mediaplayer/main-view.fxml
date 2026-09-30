@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.MediaView?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mediaplayer.controller.MainController"
+           styleClass="root">
+    <Canvas fx:id="backgroundCanvas" width="1220" height="790" mouseTransparent="true"/>
+    <BorderPane styleClass="shell">
+        <left>
+            <VBox spacing="22" prefWidth="220" styleClass="sidebar">
+                <padding>
+                    <Insets top="26" right="16" bottom="20" left="16"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <ImageView fitWidth="30" fitHeight="30" preserveRatio="true">
+                        <image>
+                            <Image url="@images/icons/app.png"/>
+                        </image>
+                    </ImageView>
+                    <VBox>
+                        <Label text="AURALIS" styleClass="brand-name"/>
+                        <Label text="MEDIA PLAYER" styleClass="brand-subtitle"/>
+                    </VBox>
+                </HBox>
+                <VBox spacing="7">
+                    <Label text="БИБЛИОТЕКА" styleClass="section-caption"/>
+                    <Button text="Главная" onAction="#showLibrary" styleClass="nav-button" maxWidth="Infinity">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/home.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button text="Медиатека" onAction="#showLibrary" styleClass="nav-button" maxWidth="Infinity">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/library.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button text="Плейлисты" onAction="#showPlaylists" styleClass="nav-button" maxWidth="Infinity">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/playlist.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button text="Недавние" onAction="#showRecent" styleClass="nav-button" maxWidth="Infinity">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/recent.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </VBox>
+                <VBox spacing="7">
+                    <Label text="КОЛЛЕКЦИЯ" styleClass="section-caption"/>
+                    <Button text="Добавить файлы" onAction="#openFiles" styleClass="add-button" maxWidth="Infinity">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/add.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button text="Настройки" onAction="#openSettings" styleClass="nav-button" maxWidth="Infinity">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/settings.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </VBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <VBox spacing="4" styleClass="sidebar-footer">
+                    <Label text="AURALIS · 2.0" styleClass="muted-small"/>
+                    <Label text="Java 25 · JavaFX" styleClass="muted-small"/>
+                </VBox>
+            </VBox>
+        </left>
+        <center>
+            <VBox spacing="16" styleClass="content">
+                <padding>
+                    <Insets top="24" right="28" bottom="20" left="28"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <VBox spacing="3" HBox.hgrow="ALWAYS">
+                        <Label fx:id="pageTitle" text="Медиатека" styleClass="page-title"/>
+                        <Label fx:id="pageSubtitle" text="Музыка и видео в одном месте" styleClass="page-subtitle"/>
+                    </VBox>
+                    <Label fx:id="trackCountLabel" text="0 файлов" styleClass="count-chip"/>
+                    <Button text="Добавить" onAction="#openFiles" styleClass="primary-button">
+                        <graphic>
+                            <ImageView fitWidth="16" fitHeight="16">
+                                <image>
+                                    <Image url="@images/icons/add.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+                <HBox spacing="18" VBox.vgrow="ALWAYS">
+                    <VBox spacing="12" HBox.hgrow="ALWAYS">
+                        <StackPane minHeight="260" VBox.vgrow="ALWAYS" styleClass="player-card">
+                            <MediaView fx:id="mediaView" fitWidth="700" fitHeight="400" preserveRatio="true"
+                                       visible="false"/>
+                            <Canvas fx:id="visualizerCanvas" width="700" height="360" mouseTransparent="true"/>
+                            <VBox alignment="CENTER" spacing="7" mouseTransparent="true">
+                                <Label text="Звук в движении" styleClass="hero-title"/>
+                                <Label text="Выбери трек — визуализатор оживёт" styleClass="hero-subtitle"/>
+                            </VBox>
+                            <Button text="Полный экран" onAction="#fullscreenVisualizer" styleClass="fullscreen-button"
+                                    StackPane.alignment="TOP_RIGHT"/>
+                        </StackPane>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <ImageView fx:id="coverView" fitWidth="58" fitHeight="58" preserveRatio="false"/>
+                            <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                <Label fx:id="titleLabel" text="Ничего не воспроизводится" styleClass="track-title"/>
+                                <Label fx:id="artistLabel" text="Добавь аудиофайл" styleClass="status-label"/>
+                                <Label fx:id="statusLabel" text="Готово к работе" styleClass="muted-small"/>
+                            </VBox>
+                            <Button text="В плейлист" onAction="#addToPlaylist" styleClass="secondary-button"/>
+                            <Button text="Удалить" onAction="#removeTrack" styleClass="secondary-button"/>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="14">
+                            <Button onAction="#previousTrack" styleClass="transport-button">
+                                <graphic>
+                                    <ImageView fitWidth="20" fitHeight="20">
+                                        <image>
+                                            <Image url="@images/icons/previous.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button onAction="#stop" styleClass="transport-button">
+                                <graphic>
+                                    <ImageView fitWidth="18" fitHeight="18">
+                                        <image>
+                                            <Image url="@images/icons/stop.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="playButton" onAction="#playPause" styleClass="play-button">
+                                <graphic>
+                                    <ImageView fitWidth="22" fitHeight="22">
+                                        <image>
+                                            <Image url="@images/icons/play.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button onAction="#nextTrack" styleClass="transport-button">
+                                <graphic>
+                                    <ImageView fitWidth="20" fitHeight="20">
+                                        <image>
+                                            <Image url="@images/icons/next.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="shuffleButton" onAction="#toggleShuffle" styleClass="transport-button">
+                                <graphic>
+                                    <ImageView fitWidth="18" fitHeight="18">
+                                        <image>
+                                            <Image url="@images/icons/shuffle.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="repeatButton" onAction="#toggleRepeat" styleClass="transport-button">
+                                <graphic>
+                                    <ImageView fitWidth="18" fitHeight="18">
+                                        <image>
+                                            <Image url="@images/icons/repeat.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button text="Режим" onAction="#nextVisualizer" styleClass="secondary-button"/>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="9">
+                            <Label fx:id="currentTimeLabel" text="00:00" styleClass="time-label"/>
+                            <Canvas fx:id="waveformCanvas" width="640" height="32" HBox.hgrow="ALWAYS"/>
+                            <Label fx:id="durationLabel" text="00:00" styleClass="time-label"/>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <ImageView fitWidth="18" fitHeight="18">
+                                <image>
+                                    <Image url="@images/icons/volume.png"/>
+                                </image>
+                            </ImageView>
+                            <Slider fx:id="volumeSlider" min="0" max="100" value="70" prefWidth="145"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <ToggleButton fx:id="equalizerToggle" text="Эквалайзер" selected="true"
+                                          styleClass="toggle-button"/>
+                        </HBox>
+                    </VBox>
+                    <VBox spacing="11" prefWidth="270" styleClass="side-panel">
+                        <VBox fx:id="libraryPane" spacing="10" VBox.vgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="Очередь" styleClass="panel-title" HBox.hgrow="ALWAYS"/>
+                                <Label text="LIVE" styleClass="live-chip"/>
+                            </HBox>
+                            <ListView fx:id="trackList" VBox.vgrow="ALWAYS" styleClass="track-list"/>
+                        </VBox>
+                        <VBox fx:id="playlistPane" spacing="10" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="Плейлисты" styleClass="panel-title" HBox.hgrow="ALWAYS"/>
+                                <Button text="+" onAction="#createPlaylist" styleClass="mini-button"/>
+                            </HBox>
+                            <ListView fx:id="playlistList" VBox.vgrow="ALWAYS" styleClass="track-list"/>
+                            <HBox spacing="7">
+                                <Button text="Создать" onAction="#createPlaylist" styleClass="primary-button"
+                                        HBox.hgrow="ALWAYS"/>
+                                <Button text="Удалить" onAction="#deletePlaylist" styleClass="secondary-button"/>
+                            </HBox>
+                        </VBox>
+                        <VBox fx:id="equalizerBox" spacing="8" styleClass="eq-card">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="Эквалайзер" styleClass="panel-title" HBox.hgrow="ALWAYS"/>
+                                <Label text="9 BAND" styleClass="muted-small"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="60" styleClass="eq-label"/>
+                                <Slider fx:id="band60" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="170" styleClass="eq-label"/>
+                                <Slider fx:id="band170" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="310" styleClass="eq-label"/>
+                                <Slider fx:id="band310" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="600" styleClass="eq-label"/>
+                                <Slider fx:id="band600" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="1k" styleClass="eq-label"/>
+                                <Slider fx:id="band1000" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="3k" styleClass="eq-label"/>
+                                <Slider fx:id="band3000" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="6k" styleClass="eq-label"/>
+                                <Slider fx:id="band6000" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="12k" styleClass="eq-label"/>
+                                <Slider fx:id="band12000" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <HBox spacing="7">
+                                <Label text="14k" styleClass="eq-label"/>
+                                <Slider fx:id="band14000" min="-12" max="12" value="0" HBox.hgrow="ALWAYS"/>
+                            </HBox>
+                            <Button text="Сбросить" onAction="#resetEqualizer" styleClass="secondary-button"
+                                    maxWidth="Infinity"/>
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </center>
+    </BorderPane>
+</StackPane>

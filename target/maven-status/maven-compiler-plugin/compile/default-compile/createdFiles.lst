@@ -1,0 +1,12 @@
+ru\mediaplayer\util\FormatUtils.class
+ru\mediaplayer\controller\MainController$2.class
+ru\mediaplayer\service\LibraryStore$Data.class
+module-info.class
+ru\mediaplayer\model\Track.class
+ru\mediaplayer\service\MediaService.class
+ru\mediaplayer\service\AppSettings.class
+ru\mediaplayer\Main.class
+ru\mediaplayer\controller\MainController$1.class
+ru\mediaplayer\controller\MainController.class
+ru\mediaplayer\service\LibraryStore.class
+ru\mediaplayer\MediaPlayerApp.class
